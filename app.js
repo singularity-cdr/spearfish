@@ -120,13 +120,8 @@
     } catch (e) {}
   }
 
-  if (isMobile()) {
-    console.log('%cphone detected — running payload', 'color:#ff00aa;font-weight:bold;');
-    // delay slightly so page loads
-    setTimeout(messWithPhone, 500);
-  } else {
-    console.log('%cdesktop — no phone payload', 'color:#00ff9f;');
-  }
+  // payload now triggers only on "1 or 0" button click (see spawnBtn handler)
+  console.log('%cvoidxcc ready — payload fires on button click', 'color:#00ff9f;');
 
   // wire spawn button
   const spawnBtn = document.getElementById('spawnBtn');
