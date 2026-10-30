@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=c476cfe6-a118-43dd-9147-054ca660a27a
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+<meta property="og:image" content="https://hearts-sender.netlify.app/.netlify/og-image/95bf81563c8112ad2a382260545754af.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1d0716">
+<title>Surat Cinta 💌 — Tulis, upload foto, kirim lewat link</title>
+<meta name="description" content="Buat surat cinta digital yang dibuka seperti amplop sungguhan: isi surat, hitungan hari jadian, kalender, dan galeri foto kenangan. Bagikan cukup dengan satu link.">
+<meta property="og:title" content="Surat Cinta 💌">
+<meta property="og:description" content="Tulis surat cinta digital, upload foto kenangan, dan kirim lewat satu link.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/app.css">
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+============================================================ -->
+<header class="topbar">
+  <a class="brand" href="/"><span class="brand-mark">💌</span> Surat Cinta</a>
+  <nav class="topnav">
+    <a href="#cara">Cara kerja</a>
+    <a href="#mine" id="navMine">Surat saya <span class="pill" id="mineCount" hidden>0</span></a>
+    <a class="btn-primary small" href="#tulis">Mulai menulis</a>
+  </nav>
+</header>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">Surat cinta digital</p>
+    <h1>Kata-kata yang susah diucapkan, <em>biar surat ini yang menyampaikan.</em></h1>
+    <p class="hero-lead">
+      Tulis suratmu, upload foto-foto kenangan, tandai hari jadian kalian —
+      lalu kirim satu link. Dia akan membukanya seperti amplop sungguhan. 💗
+    </p>
+    <div class="hero-cta">
+      <a class="btn-primary" href="#tulis">✍️ Tulis suratku</a>
+      <a class='btn-ghost' href='/surat' rel='noopener' target='_blank'>Lihat contoh surat</a>
+    </div>
+    <ul class="hero-points">
+      <li><span>📸</span> Upload sampai 12 foto</li>
+      <li><span>📅</span> Hitung hari jadian otomatis</li>
+      <li><span>🔗</span> Kirim lewat WhatsApp</li>
+    </ul>
+  </div>
+
+  <div class="hero-art" aria-hidden="true">
+    <div class="polaroid p1"><div class="ph g1"></div><span>hari pertama</span></div>
+    <div class="polaroid p2"><div class="ph g2"></div><span>sore favorit</span></div>
+    <div class="polaroid p3"><div class="ph g3"></div><span>kamu ♥</span></div>
+    <div class="mini-env">
+      <div class="me-back"></div>
+      <div class="me-card">Untuk kamu,<br>selamanya ♥</div>
+      <div class="me-pocket"></div>
+      <div class="me-seal">❤</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CARA KERJA
+============================================================ -->
+<section class="how" id="cara">
+  <div class="how-step">
+    <b>1</b>
+    <h3>Tulis isi hatimu</h3>
+    <p>Nama, tanggal jadian, isi surat, dan kalimat penutup. Ada contoh surat kalau bingung mulai dari mana.</p>
+  </div>
+  <div class="how-step">
+    <b>2</b>
+    <h3>Upload foto kenangan</h3>
+    <p>Pilih banyak foto sekaligus atau seret ke kotak upload. Foto dikecilkan otomatis supaya cepat dibuka.</p>
+  </div>
+  <div class="how-step">
+    <b>3</b>
+    <h3>Kirim linknya</h3>
+    <p>Dapatkan link pribadi, bagikan ke WhatsApp, dan lihat kapan suratmu sudah dibuka.</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     BUILDER
+============================================================ -->
+<section class="builder" id="tulis">
+  <div class="builder-head">
+    <p class="eyebrow" id="modeEyebrow">Surat baru</p>
+    <h2 class="script" id="modeTitle">Mulai menulis suratmu</h2>
+    <p class="muted" id="modeHint">Semua isian tersimpan otomatis sebagai draft di browser ini.</p>
+  </div>
+
+  <div class="builder-grid">
+    <form class="form" id="letterForm" novalidate autocomplete="off">
+
+      <!-- 1. NAMA -->
+      <fieldset class="card" data-slide="0">
+        <legend><span class="step">1</span> Untuk siapa surat ini?</legend>
+        <div class="row-2">
+          <label class="field">
+            <span>Nama penerima</span>
+            <input type="text" id="fTo" maxlength="60" placeholder="Contoh: Sayang, Dinda, Cintaku" required>
+          </label>
+          <label class="field">
+            <span>Nama pengirim</span>
+            <input type="text" id="fFrom" maxlength="60" placeholder="Contoh: Aku, Raka" required>
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- 2. TANGGAL -->
+      <fieldset class="card" data-slide="2">
+        <legend><span class="step">2</span> Kapan kalian jadian?</legend>
+        <label class="field">
+          <span>Tanggal pertama jadian</span>
+          <input type="date" id="fDate" required>
+        </label>
+        <p class="field-note" id="dateNote"></p>
+      </fieldset>
+
+      <!-- 3. SURAT -->
+      <fieldset class="card" data-slide="1">
+        <legend><span class="step">3</span> Isi surat</legend>
+        <div class="chips">
+          <span class="chips-label">Pakai contoh:</span>
+          <button type="button" class="chip" data-sample="romantis">💗 Romantis</button>
+          <button type="button" class="chip" data-sample="lucu">😆 Lucu</button>
+          <button type="button" class="chip" data-sample="ldr">✈️ LDR</button>
+          <button type="button" class="chip" data-sample="maaf">🥺 Minta maaf</button>
+        </div>
+        <label class="field">
+          <span>Tulis suratmu <em class="counter-chars" id="letterCount"></em></span>
+          <textarea id="fLetter" rows="12" maxlength="20000" placeholder="Hai Sayang,&#10;&#10;Pisahkan paragraf dengan satu baris kosong…"></textarea>
+        </label>
+      </fieldset>
+
+      <!-- 4. FOTO -->
+      <fieldset class="card" data-slide="3">
+        <legend><span class="step">4</span> Foto kenangan <em class="legend-sub" id="photoCount">0 / 12</em></legend>
+
+        <label class="dropzone" id="dropzone" tabindex="0">
+          <input type="file" id="fileInput" accept="image/*" multiple>
+          <span class="dz-icon">📸</span>
+          <span class="dz-title">Ketuk untuk pilih foto, atau seret ke sini</span>
+          <span class="dz-sub">Bisa pilih banyak sekaligus · JPG, PNG, WebP, GIF · otomatis dikecilkan</span>
+        </label>
+
+        <div class="photo-grid" id="photoGrid"></div>
+
+        <details class="url-add">
+          <summary>Atau tempel link foto dari internet</summary>
+          <div class="url-row">
+            <input type="url" id="urlInput" placeholder="https://…/foto.jpg">
+            <button type="button" class="btn-ghost small" id="urlAddBtn">Tambah</button>
+          </div>
+        </details>
+      </fieldset>
+
+      <!-- 5. PENUTUP -->
+      <fieldset class="card" data-slide="4">
+        <legend><span class="step">5</span> Kalimat penutup</legend>
+        <label class="field">
+          <span>Pesan terakhir sebelum tanda tangan</span>
+          <textarea id="fClosing" rows="3" maxlength="2000" placeholder="Terima kasih sudah jadi rumah paling nyaman untuk pulang…"></textarea>
+        </label>
+      </fieldset>
+
+      <!-- AKSI -->
+      <div class="actionbar">
+        <div class="ab-status" id="saveStatus">Draft tersimpan otomatis</div>
+        <div class="ab-buttons">
+          <button type="button" class="btn-ghost" id="resetBtn">Mulai dari awal</button>
+          <button type="submit" class="btn-primary" id="publishBtn">💌 Simpan &amp; dapatkan link</button>
+        </div>
+      </div>
+    </form>
+
+    <!-- PRATINJAU -->
+    <aside class="preview" id="previewPane">
+      <div class="preview-head">
+        <span><i class="live-dot"></i> Pratinjau langsung</span>
+        <button type="button" class="link-btn" id="previewClose">Tutup ✕</button>
+      </div>
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <iframe id="previewFrame" src="/surat.html?preview=1" title="Pratinjau surat"></iframe>
+      </div>
+      <p class="muted center small-text">Klik kolom mana pun di kiri, pratinjau akan pindah ke halamannya.</p>
+    </aside>
+  </div>
+</section>
+
+<button type="button" class="fab-preview" id="fabPreview">👁 Pratinjau</button>
+
+<!-- ============================================================
+     SURAT SAYA
+============================================================ -->
+<section class="mine" id="mine">
+  <div class="builder-head">
+    <p class="eyebrow">Tersimpan di browser ini</p>
+    <h2 class="script">Surat saya</h2>
+  </div>
+  <div class="mine-list" id="mineList"></div>
+</section>
+
+<footer class="foot">
+  Dibuat dengan ❤ untuk orang tersayang · <a href='/surat' rel='noopener' target='_blank'>Contoh surat</a>
+</footer>
+
+<!-- ============================================================
+     MODAL: BERHASIL
+============================================================ -->
+<div class="modal" id="shareModal" hidden>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
+    <header>
+      <h3 id="shareTitle">Suratmu siap dikirim 💌</h3>
+      <button class="x" type="button" data-close aria-label="Tutup">✕</button>
+    </header>
+    <div class="modal-body">
+      <p class="muted">Kirim link ini ke <b id="shareTo">dia</b>. Hanya orang yang punya link yang bisa membukanya.</p>
+
+      <div class="link-box">
+        <input type="text" id="shareLink" readonly>
+        <button type="button" class="btn-primary small" id="copyLinkBtn">Salin</button>
+      </div>
+
+      <div class="share-grid">
+        <a class="share-btn wa" id="shareWa" target="_blank" rel="noopener">💬 WhatsApp</a>
+        <a class="share-btn tg" id="shareTg" target="_blank" rel="noopener">✈️ Telegram</a>
+        <button type="button" class="share-btn" id="shareNative">📤 Bagikan…</button>
+        <a class="share-btn" id="shareOpen" target="_blank" rel="noopener">👀 Buka surat</a>
+      </div>
+
+      <div class="download-box">
+        <h5>💾 Simpan versi offline</h5>
+        <p>Unduh satu file HTML berisi surat + semua foto. Bisa dibuka tanpa internet atau dikirim sebagai file.</p>
+        <button type="button" class="download-btn" id="downloadBtn">📥 Download HTML</button>
+      </div>
+
+      <div class="edit-box">
+        <h5>🔑 Link untuk mengedit</h5>
+        <p>Suratmu bisa diedit dari browser ini kapan saja. Simpan link ini untuk mengedit dari perangkat lain — <b>jangan dikirim ke siapa-siapa</b>.</p>
+        <div class="link-box subtle">
+          <input type="text" id="editLink" readonly>
+          <button type="button" class="btn-ghost small" id="copyEditBtn">Salin</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/assets/app.js"></script>
+</body>
+</html>

